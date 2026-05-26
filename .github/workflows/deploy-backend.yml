@@ -16,4 +16,19 @@ jobs:
     
     - name: Deploy to Render
       run: |
-        curl -X POST https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+        set -e
+        response=$(curl -s -w "\n%{http_code}" -X POST \
+          -H "Content-Type: application/json" \
+          "https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}")
+        
+        status_code=$(echo "$response" | tail -n1)
+        body=$(echo "$response" | sed '$d')
+        
+        echo "Deployment Response: $body"
+        
+        if [ "$status_code" -lt 200 ] || [ "$status_code" -gt 299 ]; then
+          echo "Deployment failed with status code: $status_code"
+          exit 1
+        fi
+        
+        echo "✓ Backend deployment initiated successfully"
