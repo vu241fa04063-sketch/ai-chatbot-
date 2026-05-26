@@ -1,0 +1,14 @@
+{
+  "name": "ai-chatbot-fullstack",
+  "version": "1.0.0",
+  "description": "Full-stack AI Chatbot with FastAPI backend and React frontend",
+  "scripts": {
+    "setup": "npm install && cd frontend && npm install && cd ../backend && pip install -r requirements.txt",
+    "dev": "cd frontend && npm run dev",
+    "start": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build"
+  },
+  "keywords": ["fastapi", "react", "vite", "chatbot", "ai"],
+  "author": "",
+  "license": "MIT"
+}
